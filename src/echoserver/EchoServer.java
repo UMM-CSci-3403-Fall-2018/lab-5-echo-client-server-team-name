@@ -18,11 +18,14 @@ public class EchoServer {
 
                 InputStream input = client.getInputStream();
                 OutputStream output = client.getOutputStream();
-
                 int data;
+
+                // Read data sent from the client and send it back
+                // to the client
                 while((data = input.read()) != -1) {
                     output.write(data);
                 }
+
 
                 // Close the client socket since we're done.
                 client.close();

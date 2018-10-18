@@ -22,20 +22,23 @@ public class EchoClient {
 
             OutputStream output = socket.getOutputStream();
             InputStream keyboard = System.in;
+            InputStream input = socket.getInputStream();
             int keyboardData;
+
+            // Get data from the keyboard, write it to the server,
+            // read from server and write it out
             while ((keyboardData = keyboard.read()) != -1) {
                 output.write(keyboardData);
+                int data = input.read();
+                System.out.write(data);
             }
 
-            // Get the input stream so we can read from that socket
-            InputStream input = socket.getInputStream();
-            int data;
-            while((data = input.read()) != -1) {
-                System.out.println((byte) data);
-            }
 
             // Close the socket when we're done reading from it
             socket.close();
+
+            // Flush out the output so the system sends what it has 
+            System.out.flush();
 
             // Provide some minimal error handling.
         } catch (ConnectException ce) {
